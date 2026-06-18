@@ -1,0 +1,11 @@
+{
+  "name": "trendsensor",
+  "version": "0.1.0",
+  "description": "Local-first trend intelligence desk for public web and platform signals.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "node tests/analyzer.test.js"
+  }
+}

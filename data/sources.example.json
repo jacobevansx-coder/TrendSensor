@@ -1,0 +1,16 @@
+[
+  {
+    "type": "reddit_rss",
+    "label": "r/artificial hot",
+    "url": "https://www.reddit.com/r/artificial/hot/.rss",
+    "marketFocus": "technology",
+    "limit": 5
+  },
+  {
+    "type": "youtube_rss",
+    "label": "YouTube channel feed",
+    "url": "https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID",
+    "marketFocus": "technology",
+    "limit": 5
+  }
+]

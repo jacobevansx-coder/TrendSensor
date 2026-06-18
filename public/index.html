@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="TrendSensor is a local-first trend intelligence desk for monitoring public web, social, and platform signals from pages you own or are permitted to audit."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23a53f1f'/%3E%3Ccircle cx='16' cy='16' r='3.5' fill='%23fffaf2'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23fffaf2' stroke-width='2' opacity='0.6'/%3E%3C/svg%3E"
+    />
+    <title>TrendSensor | Trend Intelligence Desk</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="history-panel">
+        <div class="history-header">
+          <p class="eyebrow">TrendSensor</p>
+          <h1>Trend Intelligence Desk</h1>
+          <p class="lede">
+            Monitor public web and platform pages for market momentum, source trust, refresh cadence, and monetization fit.
+          </p>
+        </div>
+
+        <section class="sidebar-section">
+          <div class="sidebar-row">
+            <p class="eyebrow">Live Monitors</p>
+            <span class="sidebar-count" id="monitor-count">0</span>
+          </div>
+          <div class="history-list" id="monitor-list">
+            <p class="history-empty">No live monitors yet.</p>
+          </div>
+        </section>
+
+        <section class="sidebar-section">
+          <div class="sidebar-row">
+            <p class="eyebrow">Snapshots</p>
+            <span class="sidebar-count" id="snapshot-count">0</span>
+          </div>
+          <div class="history-list" id="history-list">
+            <p class="history-empty">No scans yet.</p>
+          </div>
+        </section>
+
+        <section class="sidebar-section">
+          <div class="sidebar-row">
+            <p class="eyebrow">Feed Sources</p>
+            <span class="sidebar-count" id="source-count">0</span>
+          </div>
+          <div class="history-list" id="source-list">
+            <p class="history-empty">No feed sources saved.</p>
+          </div>
+        </section>
+      </aside>
+
+      <main class="workspace">
+        <section class="hero">
+          <div>
+            <p class="eyebrow">Local-First Trend Intelligence</p>
+            <h2>Watch topics, sources, and market momentum move across the open web.</h2>
+          </div>
+          <div class="hero-note">
+            <span>Source Model</span>
+            <strong>Public web URLs, Reddit, YouTube, Google surfaces, X/Twitter, TikTok, Instagram, publishers, directories</strong>
+          </div>
+        </section>
+
+        <section class="composer">
+          <form id="scan-form">
+            <div class="field-grid">
+              <label class="field">
+                <span>Desk Name</span>
+                <input id="label" name="label" type="text" maxlength="80" placeholder="Example: Austin Sports Publisher" />
+              </label>
+
+              <label class="field">
+                <span>Market Focus</span>
+                <select id="market-focus" name="marketFocus">
+                  <option value="">Auto-detect</option>
+                  <option value="local_services">Local Services</option>
+                  <option value="real_estate">Real Estate</option>
+                  <option value="finance">Finance</option>
+                  <option value="healthcare">Healthcare</option>
+                  <option value="jobs">Jobs</option>
+                  <option value="education">Education</option>
+                  <option value="travel">Travel</option>
+                  <option value="sports">Sports</option>
+                  <option value="food">Food</option>
+                  <option value="technology">Technology</option>
+                  <option value="legal">Legal</option>
+                  <option value="automotive">Automotive</option>
+                </select>
+              </label>
+
+              <label class="field">
+                <span>Refresh Cadence</span>
+                <select id="refresh-minutes" name="refreshMinutes">
+                  <option value="10">10 min</option>
+                  <option value="15" selected>15 min</option>
+                  <option value="30">30 min</option>
+                  <option value="60">60 min</option>
+                  <option value="180">3 hours</option>
+                </select>
+              </label>
+            </div>
+
+            <label class="field">
+              <span>URLs</span>
+              <textarea
+                id="urls"
+                name="urls"
+                rows="7"
+                spellcheck="false"
+                autocapitalize="off"
+                autocomplete="off"
+                placeholder="Enter one URL per line&#10;https://example.com&#10;https://example.com/blog/post&#10;https://example.com/directory"
+              ></textarea>
+            </label>
+
+            <div class="actions">
+              <div class="button-row">
+                <button type="button" id="monitor-button">Create Live Monitor</button>
+                <button type="button" id="scan-button" class="button-secondary">Run Snapshot</button>
+              </div>
+              <p class="hint">Use up to 8 URLs per desk. Best results come from pages you own or are permitted to audit.</p>
+            </div>
+          </form>
+          <div class="status-card" id="status-card" role="status" aria-live="polite">
+            <p class="status-label">Status</p>
+            <p class="status-message">Ready for a new market desk.</p>
+            <div class="status-meta" id="status-meta"></div>
+          </div>
+        </section>
+
+        <section class="source-composer">
+          <div class="source-copy">
+            <p class="eyebrow">Local Feed Watchlist</p>
+            <h3>Monitor Reddit and YouTube feeds without platform credentials.</h3>
+            <p class="hint">
+              Paste RSS or Atom sources as JSON. YouTube channel feeds and Reddit subreddit feeds work locally in VS Code.
+            </p>
+          </div>
+          <label class="field">
+            <span>Sources JSON</span>
+            <textarea
+              id="sources-json"
+              rows="8"
+              spellcheck="false"
+              autocapitalize="off"
+              autocomplete="off"
+              placeholder='[
+  {
+    "type": "reddit_rss",
+    "label": "r/artificial hot",
+    "url": "https://www.reddit.com/r/artificial/hot/.rss",
+    "marketFocus": "technology",
+    "limit": 5
+  },
+  {
+    "type": "youtube_rss",
+    "label": "YouTube channel",
+    "url": "https://www.youtube.com/feeds/videos.xml?channel_id=CHANNEL_ID",
+    "marketFocus": "technology",
+    "limit": 5
+  }
+]'
+            ></textarea>
+          </label>
+          <div class="actions">
+            <div class="button-row">
+              <button type="button" id="save-sources-button">Save Sources</button>
+              <button type="button" id="refresh-sources-button" class="button-secondary">Refresh Sources</button>
+            </div>
+            <p class="hint">Feed refreshes are capped, source-safe, and stored as normal snapshots.</p>
+          </div>
+        </section>
+
+        <section class="results" id="results">
+          <div class="results-empty">
+            <p class="eyebrow">No Desk Loaded</p>
+            <h3>Create a monitor or run a snapshot to build a trend desk.</h3>
+            <p>
+              TrendSensor tracks market fit, source trust, trend velocity, refresh cadence, and page-level evidence over time.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="summary-template">
+      <section class="monitor-banner" data-slot="monitor-banner"></section>
+      <section class="summary-grid">
+        <article class="summary-card score-card">
+          <p class="card-label">Trend Index</p>
+          <div class="score-row">
+            <strong class="score-value"></strong>
+            <span class="score-type"></span>
+          </div>
+          <p class="card-copy"></p>
+        </article>
+        <article class="summary-card">
+          <p class="card-label">Coverage</p>
+          <div class="stack" data-slot="coverage"></div>
+        </article>
+        <article class="summary-card">
+          <p class="card-label">Markets</p>
+          <div class="stack" data-slot="markets"></div>
+        </article>
+        <article class="summary-card">
+          <p class="card-label">Live Pulse</p>
+          <div class="stack" data-slot="pulse"></div>
+        </article>
+        <article class="summary-card">
+          <p class="card-label">Source Coverage</p>
+          <div class="stack" data-slot="opportunities"></div>
+        </article>
+        <article class="summary-card">
+          <p class="card-label">Rollout Notes</p>
+          <div class="stack" data-slot="rollout"></div>
+        </article>
+      </section>
+      <section class="trend-grid" data-slot="trends"></section>
+      <section class="page-grid" data-slot="pages"></section>
+    </template>
+
+    <template id="page-template">
+      <article class="page-card">
+        <div class="page-head">
+          <div>
+            <p class="page-url"></p>
+            <h4 class="page-title"></h4>
+            <p class="page-markets"></p>
+          </div>
+          <span class="badge"></span>
+        </div>
+        <div class="metric-row"></div>
+        <div class="split">
+          <div>
+            <p class="subhead">Recommendations</p>
+            <div class="recommendations"></div>
+          </div>
+          <div>
+            <p class="subhead">Risks</p>
+            <div class="risks"></div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
